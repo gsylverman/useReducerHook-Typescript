@@ -1,26 +1,71 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { createContext, useReducer } from 'react';
+import ListItems from './components/ListItems';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+type Action = { type: "add"; }
+| {type: 'check', payload: string}
+| {type: 'delete', payload: string}
+| {type: 'write', payload: {e: React.ChangeEvent<HTMLInputElement>; id: string}};
+
+interface ItemType {
+  id: string;
+  text: string;
+  completed: boolean;
 }
+type State = Array<ItemType>;
 
-export default App;
+const listReducer = (state: State, action: Action) => {
+  switch(action.type){
+    case 'add':
+      return [
+        ...state,
+        {
+          id: Date.now().toString(),
+          text: '',
+          completed: false
+        }
+      ]
+      case "check":
+        return state.map(item => {
+          if(item.id === action.payload) {
+            return {
+              ...item,
+              completed: !item.completed
+            }
+          }
+          return item;
+        })
+        case 'write':
+          return state.map(item=> {
+            if(item.id === action.payload.id) {
+              return {
+                ...item,
+                text: action.payload.e.target.value
+              }
+            }
+            return item;
+          })
+          case 'delete' :
+            return state.filter(item => item.id !== action.payload);
+      default:
+        return state;
+  }
+};
+export const Context = createContext<any>(null);
+
+export const App = () => {
+  const [list, dispatch] = useReducer(listReducer, []);
+  return (
+    <Context.Provider value={dispatch}>
+      <div className="container text-center">
+        <h1>List</h1>
+        <button
+          onClick={()=>dispatch({type:"add"})}
+          className='btn btn-primary'
+        >
+          Add
+        </button>
+        <ListItems list={list} />
+      </div>
+    </Context.Provider>
+  );
+};
