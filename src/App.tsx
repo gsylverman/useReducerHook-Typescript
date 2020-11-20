@@ -1,5 +1,6 @@
 import React, { createContext, useReducer } from 'react';
 import ListItems from './components/ListItems';
+import Counter from './components/Counter';
 
 type Action = { type: "add"; }
 | {type: 'check', payload: string}
@@ -63,7 +64,26 @@ export const App = () => {
           className='btn btn-primary'
         >
           Add
-        </button>
+        </button><br/>
+        <Counter>
+          {({ nr, setNumber })=> (
+            <>
+              Nr: { nr }
+              <button
+                onClick={()=> setNumber(prevState => ({nr: prevState.nr + 1}))}
+                className="btn btn-secondary"
+              >
+                +
+              </button>
+              <button
+                onClick={()=>setNumber(prevState=>({nr: prevState.nr - 1}))}
+                className="btn btn-danger"
+              >
+                -
+              </button>
+            </>
+          )}
+        </Counter>
         <ListItems list={list} />
       </div>
     </Context.Provider>
