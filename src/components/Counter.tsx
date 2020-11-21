@@ -9,9 +9,10 @@ interface CounterProps {
   }) => JSX.Element | null
 }
 
+
 const Counter: React.FC<CounterProps> = ({children}) => {
   const [{nr}, setNumber] = useState({nr: 0});
-
+  console.log("a")
   return (
     <div>
       {children({nr, setNumber})}

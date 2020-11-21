@@ -1,6 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import ListItems from './components/ListItems';
 import Counter from './components/Counter';
+import PracticeTypes from './components/PracticeTypes';
 
 type Action = { type: "add"; }
 | {type: 'check', payload: string}
@@ -84,6 +85,7 @@ export const App = () => {
             </>
           )}
         </Counter>
+        <PracticeTypes />
         <ListItems list={list} />
       </div>
     </Context.Provider>
