@@ -3,7 +3,12 @@ import React, { useMemo, useState } from 'react';
 export interface AppProps {
   
 }
- 
+/*
+  useMemo: invokes the provided function and caches its result
+  useCallBack: caches function
+  useMemo: caches the result of an invoked function
+*/
+
 const App: React.FC<AppProps> = () => {
   const [{ nr1 }, setNr1] = useState({nr1: 0});
   const [{ nr2 }, setNr2] = useState({nr2: 0});
