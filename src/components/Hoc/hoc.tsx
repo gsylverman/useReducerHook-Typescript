@@ -1,11 +1,7 @@
 import React from 'react';
 
-type WraperCompType = {
-  (props:any): JSX.Element;
-}
-
-const WraperComp = (WrappedComp: WraperCompType, pass: string) => {
-  return (props: React.ReactChildren) => {
+const WraperComp = <T extends {}>(WrappedComp: React.ComponentType<T>, pass: string) => {
+  return (props: T) => {
     if (pass === '1234') {
       return <WrappedComp {...props} />
     }
