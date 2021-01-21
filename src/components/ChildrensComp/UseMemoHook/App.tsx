@@ -18,6 +18,7 @@ const App: React.FC<AppProps> = () => {
     while(i < 2000000000) i++;
     return nr1 % 2 === 0;
   }, [nr1])
+  
   const handleChangeNr1 = () => {
     setNr1((prevState=>({nr1: prevState.nr1 + 1})))
   }
